@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from beanie import Document
+from pydantic import Field
 
 
 class Message(Document):
@@ -21,9 +22,9 @@ class Message(Document):
 
     content: str
     author_username: str
-    created_at: datetime
+    created_at: datetime = Field(default_factory=datetime.now)
 
-    liked_by_usernames: list[str]
+    liked_by_usernames: list[str] = Field(default_factory=list)
 
     class Settings:
         """
