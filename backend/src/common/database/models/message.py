@@ -25,7 +25,7 @@ class Message(Document):
 
     liked_by_usernames: list[str]
 
-    class Collection:
+    class Settings:
         """
         Collection configuration
 

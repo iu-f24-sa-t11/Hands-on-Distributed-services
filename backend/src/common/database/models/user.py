@@ -13,7 +13,7 @@ class User(Document):
 
     username: str
 
-    class Collection:
+    class Settings:
         """
         Collection configuration
 
