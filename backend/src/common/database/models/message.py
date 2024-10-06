@@ -1,5 +1,6 @@
+from datetime import datetime
+
 from beanie import Document
-from black import datetime
 
 
 class Message(Document):
@@ -24,7 +25,7 @@ class Message(Document):
 
     liked_by_usernames: list[str]
 
-    class Collection:
+    class Settings:
         """
         Collection configuration
 
