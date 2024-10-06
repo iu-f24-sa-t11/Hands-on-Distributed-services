@@ -3,13 +3,15 @@ from fastapi import APIRouter, Response
 from services.message.schemas import CreateMessageDTO
 from services.message.service import MessageService
 
+from common.schemas.message import MessageDTO
+
 router = APIRouter()
 
 
-@router.post("/", status_code=201)
+@router.post("/", response_model=MessageDTO)
 async def create_message(data: CreateMessageDTO):
-    await MessageService.create(
+    message = await MessageService.create(
         content=data.content, author_username=data.author_username
     )
 
-    return Response(status_code=201)
+    return message
