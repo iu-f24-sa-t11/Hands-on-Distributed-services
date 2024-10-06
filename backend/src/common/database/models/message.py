@@ -1,5 +1,6 @@
+from datetime import datetime
+
 from beanie import Document
-from black import datetime
 
 
 class Message(Document):
