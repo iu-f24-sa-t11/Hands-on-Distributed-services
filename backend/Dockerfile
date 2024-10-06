@@ -22,6 +22,6 @@ FROM base AS like-service
 
 COPY ./src/services/like/app.py /app/src/main.py
 
-FROM base AS user-service
+FROM base AS message-service
 
-COPY ./src/services/user/app.py /app/src/main.py
+COPY ./src/services/message/app.py /app/src/main.py
