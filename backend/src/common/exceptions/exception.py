@@ -1,4 +1,4 @@
-from fastapi import HTTPException
+from fastapi import Request, Response
 
 
 class ApplicationException(Exception):
@@ -8,5 +8,5 @@ class ApplicationException(Exception):
         super().__init__(self.message)
 
 
-def application_exception_handler(exc: ApplicationException):
-    raise HTTPException(status_code=exc.status_code, detail=exc.message)
+def application_exception_handler(request: Request, exc: ApplicationException):
+    return Response(status_code=exc.status_code, content=exc.message)
