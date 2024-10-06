@@ -1,0 +1,7 @@
+{$DOMAIN} {
+    reverse_proxy /api/auth/* auth-service-backend:8000
+    reverse_proxy /api/feed/* feed-service-backend:8000
+    reverse_proxy /api/like/* like-service-backend:8000
+    reverse_proxy /api/messages/* message-service-backend:8000
+    reverse_proxy /* frontend:80
+}
