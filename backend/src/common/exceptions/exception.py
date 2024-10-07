@@ -8,5 +8,7 @@ class ApplicationException(Exception):
         super().__init__(self.message)
 
 
-def application_exception_handler(request: Request, exc: ApplicationException):
+def application_exception_handler(
+    request: Request, exc: ApplicationException
+) -> Response:
     return Response(status_code=exc.status_code, content=exc.message)
