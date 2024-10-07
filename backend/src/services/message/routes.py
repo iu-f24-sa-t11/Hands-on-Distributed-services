@@ -1,9 +1,8 @@
-from fastapi import APIRouter, Response
-
-from services.message.schemas import CreateMessageDTO
-from services.message.service import MessageService
+from fastapi import APIRouter
 
 from common.schemas.message import MessageDTO
+from services.message.schemas import CreateMessageDTO
+from services.message.service import MessageService
 
 router = APIRouter()
 
