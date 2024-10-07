@@ -17,3 +17,5 @@ class LikeDTO(BaseModel):
             ObjectId(value)
         except Exception:
             raise ValueError("Invalid message_id")
+
+        return value
