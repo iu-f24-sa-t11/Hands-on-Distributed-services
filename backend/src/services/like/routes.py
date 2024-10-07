@@ -13,7 +13,7 @@ async def set_like(data: LikeDTO):
     return Response(status_code=200)
 
 
-@router.delete("/unset")
+@router.post("/unset")
 async def unset_like(data: LikeDTO):
     await LikeService.unset_like(message_id=data.message_id, username=data.username)
 
