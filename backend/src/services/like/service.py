@@ -11,7 +11,7 @@ class LikeService:
             raise UserDoesNotExist()
 
         if not await MessageRepository.is_exists(message_id=message_id):
-            raise MessageDoesNotExist()
+            raise MessageDoesNotExist(message_id=message_id)
 
         await MessageRepository.add_liked_username(
             message_id=message_id, username=username
@@ -23,7 +23,7 @@ class LikeService:
             raise UserDoesNotExist()
 
         if not await MessageRepository.is_exists(message_id=message_id):
-            raise MessageDoesNotExist()
+            raise MessageDoesNotExist(message_id=message_id)
 
         await MessageRepository.remove_liked_username(
             message_id=message_id, username=username
