@@ -17,4 +17,5 @@ class MessageService:
             content=message.content,
             author_username=message.author_username,
             created_at=message.created_at,
+            liked_by_usernames=message.liked_by_usernames,
         )

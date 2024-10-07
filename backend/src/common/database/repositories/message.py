@@ -27,3 +27,7 @@ class MessageRepository:
         if username in message.liked_by_usernames:
             message.liked_by_usernames.remove(username)
             await message.save()
+
+    @staticmethod
+    async def get_last_messages(limit: int) -> list[Message]:
+        return await Message.find().sort([("created_at", -1)]).limit(limit).to_list(length=limit)
