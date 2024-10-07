@@ -6,11 +6,11 @@ class AuthService:
     @staticmethod
     async def register(username: str) -> None:
         if await UserRepository.is_exists(username):
-            raise UserAlreadyExists()
+            raise UserAlreadyExists(username=username)
 
         await UserRepository.create(username)
 
     @staticmethod
     async def login(username: str) -> None:
         if not await UserRepository.is_exists(username):
-            raise UserDoesNotExist()
+            raise UserDoesNotExist(username=username)

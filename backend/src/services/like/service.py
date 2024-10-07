@@ -8,7 +8,7 @@ class LikeService:
     @staticmethod
     async def set_like(message_id: str, username: str):
         if not await UserRepository.is_exists(username=username):
-            raise UserDoesNotExist()
+            raise UserDoesNotExist(username=username)
 
         if not await MessageRepository.is_exists(message_id=message_id):
             raise MessageDoesNotExist(message_id=message_id)
@@ -20,7 +20,7 @@ class LikeService:
     @staticmethod
     async def unset_like(message_id: str, username: str):
         if not await UserRepository.is_exists(username=username):
-            raise UserDoesNotExist()
+            raise UserDoesNotExist(username=username)
 
         if not await MessageRepository.is_exists(message_id=message_id):
             raise MessageDoesNotExist(message_id=message_id)

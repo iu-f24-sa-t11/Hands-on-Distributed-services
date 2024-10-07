@@ -8,7 +8,7 @@ class MessageService:
     @staticmethod
     async def create(content: str, author_username: str) -> MessageDTO:
         if not await UserRepository.is_exists(username=author_username):
-            raise UserDoesNotExist()
+            raise UserDoesNotExist(username=author_username)
 
         message = await MessageRepository.create(content=content, author_username=author_username)
 
