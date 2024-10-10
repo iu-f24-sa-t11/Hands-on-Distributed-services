@@ -28,7 +28,7 @@ Hands-on-Distributed-services
 │   │   │   │   │   ├── __init__.py	# Initialize repositories package
 │   │   │   │   │   ├── message.py	# Message repository for CRUD and like management
 │   │   │   │   │   └── user.py		# User repository for CRUD and existence check
-│   │   │   │   ├── __init__.py
+│   │   │   │   ├── __init__.py  # Initialize database package
 │   │   │   │   └── db.py		# Database initialization with Beanie and MongoDB models
 │   │   │   ├── exceptions
 │   │   │   │   ├── __init__.py		# Initialize exceptions package
