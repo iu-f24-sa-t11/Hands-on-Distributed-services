@@ -16,4 +16,24 @@
 
 ## Setup Instructions
 
+##### 1. Clone repository
+```
+git clone https://github.com/iu-f24-sa-t11/Hands-on-Distributed-services.git
+```
+
+##### 2. Create .env file like in .env.sample
+```
+DOMAIN=<your domain>
+```
+
+##### 3.1 Make sure you have insall requirements
+```
+pip install -r requirements.txt
+```
+
+##### 3.2 Start application
+```
+docker-compose up --build
+```
+
 ## Link to YouTube video:
