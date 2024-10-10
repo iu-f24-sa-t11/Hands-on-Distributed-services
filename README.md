@@ -28,7 +28,8 @@ DOMAIN=<your domain>
 
 ##### 3.1 Make sure you have insall requirements
 ```
-sudo apt install requirements.txt
+chmod +x requirements.sh
+sudo ./requirements.sh
 ```
 
 ##### 3.2 Start application
