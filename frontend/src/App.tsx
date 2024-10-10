@@ -59,6 +59,10 @@ export default function Component() {
         .catch(error => {
             if (error.response.status == 404){
                 setErrorMessage("You need registration before Log In")
+            } else if (error.response.status == 422){
+                setErrorMessage("Username does not meet the requirements")
+            } else {
+                setErrorMessage("Something went wrong")
             }
             console.log(error.message)
         });
@@ -73,7 +77,14 @@ export default function Component() {
             setErrorMessage("");
         })
         .catch(error => {
-          setErrorMessage(error.message)
+            if (error.response.status == 400){
+                setErrorMessage("User already exists")
+            } else if (error.response.status == 422){
+                setErrorMessage("Username does not meet the requirements")
+            } else {
+                setErrorMessage("Something went wrong")
+            }
+            console.log(error.message)
         });
     }
   };
@@ -146,14 +157,15 @@ const handleSendMessage = () => {
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Log In or Register</DialogTitle>
+                    <DialogDescription>You need to Log In to write and like messages</DialogDescription>
+                    <DialogDescription>Username must be 3-30 characters long, containing only letters, numbers, and underscores.</DialogDescription>
+                    {errorMessage &&
+                      <DialogDescription className="text-red-500">{errorMessage}</DialogDescription>
+                    }
+                    {successMessage &&
+                      <DialogDescription className="text-blue-600">{successMessage}</DialogDescription>
+                    }
                 </DialogHeader>
-                <DialogDescription>You need to Log In to write and like messages</DialogDescription>
-                {errorMessage &&
-                  <DialogDescription className="text-red-500">{errorMessage}</DialogDescription>
-                }
-                {successMessage &&
-                  <DialogDescription className="text-blue-600">{successMessage}</DialogDescription>
-                }
                 <div className="grid gap-4 py-4">
                   <Input
                     placeholder="Username"
