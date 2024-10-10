@@ -111,7 +111,7 @@ Hands-on-Distributed-services
 │   └── vite.config.ts			# Vite configuration for the React application, including plugins and alias settings
 │
 ├── static
-|   └── screenshot.jpg # screenshot for readme file
+|   └── screenshot.jpg                  # screenshot for readme file
 ├── .env.sample				# Sample environment file for defining environment variables, such as DOMAIN
 ├── .gitignore				# Specifies files and directories to be ignored by Git
 ├── Caddyfile				# Caddy configuration for reverse proxying to various backend services and frontend
