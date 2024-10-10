@@ -1,3 +1,5 @@
+import re
+
 from bson import ObjectId
 from pydantic import BaseModel, Field, field_validator
 
@@ -17,5 +19,15 @@ class LikeDTO(BaseModel):
             ObjectId(value)
         except Exception:
             raise ValueError("Invalid message_id")
+
+        return value
+
+    @field_validator("username")
+    @classmethod
+    def validate_message_id(cls, value):
+        if not re.match(r"^\w+$", value):
+            raise ValueError(
+                "Username must contain only letters, numbers, and underscores."
+            )
 
         return value
