@@ -3,10 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Heart } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { register, login, getFeed, postMessage, setLike, unsetLike } from './api/requests.ts';
 
-// Интерфейс для сообщения
 interface Message {
   id: string;
   content: string;
@@ -23,32 +22,45 @@ export default function Component() {
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    if (isLoggedIn) {
+    const storedUsername = sessionStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  useEffect(() => {
       getFeed().then(response => {
-        // Форматируем сообщения для удобства работы с ними
         const formattedMessages = response.data.map((msg: Message) => ({
           ...msg,
-          liked: msg.liked_by_usernames.includes(username), // Проверка, лайкнул ли пользователь это сообщение
-          likes: msg.liked_by_usernames.length, // Количество лайков
+          liked: msg.liked_by_usernames.includes(username),
+          likes: msg.liked_by_usernames.length,
         }));
         setMessages(formattedMessages);
       }).catch(error => {
         console.error("Error fetching feed:", error);
       });
-    }
-  }, [isLoggedIn, username]);
+  }, []);
 
   const handleLogin = () => {
     if (username.trim()) {
       login(username)
         .then(() => {
+          sessionStorage.setItem("username", username);
           setIsLoggedIn(true);
           setIsDialogOpen(false);
+          setErrorMessage("");
+          setSuccessMessage("");
         })
         .catch(error => {
-          console.error("Login error:", error);
+            if (error.response.status == 404){
+                setErrorMessage("You need registration before Log In")
+            }
+            console.log(error.message)
         });
     }
   };
@@ -57,11 +69,11 @@ export default function Component() {
     if (username.trim()) {
       register(username)
         .then(() => {
-          setIsLoggedIn(true);
-          setIsDialogOpen(false);
+            setSuccessMessage("You successfully register, now you can Log In");
+            setErrorMessage("");
         })
         .catch(error => {
-          console.error("Registration error:", error);
+          setErrorMessage(error.message)
         });
     }
   };
@@ -69,20 +81,26 @@ export default function Component() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUsername("");
-    setMessages([]);
+    sessionStorage.removeItem("username");
   };
 
-  const handleSendMessage = () => {
+const handleSendMessage = () => {
     if (newMessage.trim()) {
       postMessage(newMessage, username)
         .then(response => {
           const newMsg: Message = {
             ...response.data,
-            liked_by_usernames: [], // Новое сообщение ещё не имеет лайков
+            liked_by_usernames: [],
             liked: false,
             likes: 0,
           };
-          setMessages([newMsg, ...messages]);
+
+          const updatedMessages = [newMsg, ...messages];
+          if (updatedMessages.length > 10) {
+            updatedMessages.pop();
+          }
+
+          setMessages(updatedMessages);
           setNewMessage("");
         })
         .catch(error => {
@@ -92,25 +110,29 @@ export default function Component() {
   };
 
   const handleLike = (id: string, liked: boolean) => {
-    const apiAction = liked ? unsetLike : setLike;
-    apiAction(id, username)
-      .then(() => {
-        setMessages(messages.map(msg =>
-          msg.id === id
-            ? { ...msg, likes: liked ? msg.likes - 1 : msg.likes + 1, liked: !msg.liked }
-            : msg
-        ));
-      })
-      .catch(error => {
-        console.error("Error setting like:", error);
-      });
+    if (isLoggedIn) {
+      const apiAction = liked ? unsetLike : setLike;
+      apiAction(id, username)
+        .then(() => {
+          setMessages(messages.map(msg =>
+            msg.id === id
+              ? { ...msg, likes: liked ? msg.likes - 1 : msg.likes + 1, liked: !msg.liked }
+              : msg
+          ));
+        })
+        .catch(error => {
+          console.error("Error setting like:", error);
+        });
+    } else {
+      setIsDialogOpen(() => true);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-gray-800">MiniBird</h1>
+          <h1 className="text-xl font-semibold text-gray-800">Blue Cactus</h1>
           {isLoggedIn ? (
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-600">{username}</span>
@@ -119,12 +141,19 @@ export default function Component() {
           ) : (
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button size="sm">Sign In</Button>
+                <Button size="sm">Log In</Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Sign In or Register</DialogTitle>
+                  <DialogTitle>Log In or Register</DialogTitle>
                 </DialogHeader>
+                <DialogDescription>You need to Log In to write and like messages</DialogDescription>
+                {errorMessage &&
+                  <DialogDescription className="text-red-500">{errorMessage}</DialogDescription>
+                }
+                {successMessage &&
+                  <DialogDescription className="text-blue-600">{successMessage}</DialogDescription>
+                }
                 <div className="grid gap-4 py-4">
                   <Input
                     placeholder="Username"
@@ -135,7 +164,7 @@ export default function Component() {
                     <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
                       Cancel
                     </Button>
-                    <Button onClick={handleLogin}>Sign In</Button>
+                    <Button onClick={handleLogin}>Log In</Button>
                     <Button variant="secondary" onClick={handleRegister}>Register</Button>
                   </div>
                 </div>
