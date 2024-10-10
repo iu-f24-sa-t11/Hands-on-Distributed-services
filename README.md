@@ -110,13 +110,14 @@ Hands-on-Distributed-services
 │   ├── tsconfig.node.json		# TypeScript configuration for Node.js with specific compiler options
 │   └── vite.config.ts			# Vite configuration for the React application, including plugins and alias settings
 │
+├── static
+|   └── screenshot.jpg # screenshot for readme file
 ├── .env.sample				# Sample environment file for defining environment variables, such as DOMAIN
 ├── .gitignore				# Specifies files and directories to be ignored by Git
 ├── Caddyfile				# Caddy configuration for reverse proxying to various backend services and frontend
 ├── README.md				# Instructions and information about the project setup, organization, and team
 ├── docker-compose.yml			# Docker Compose configuration for defining services, networks, and volumes
-├── requiements.sh			# Shell script for installing Docker and Docker Compose on Ubuntu
-└── static				# Placeholder for static files; currently empty
+└── requiements.sh			# Shell script for installing Docker and Docker Compose on Ubuntu
 </pre>
 ## Setup Instructions
 
