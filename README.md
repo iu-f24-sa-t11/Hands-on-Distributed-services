@@ -14,7 +14,7 @@
 
 #### Screenshot:
 
-[-](https://github.com/iu-f24-sa-t11/Hands-on-Distributed-services/raw/main/static/screenshot.jpg)
+![-](https://github.com/iu-f24-sa-t11/Hands-on-Distributed-services/raw/main/static/screenshot.jpg)
 
 ## Codebase organisation:
 <pre>
