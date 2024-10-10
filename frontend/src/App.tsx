@@ -12,6 +12,8 @@ import {
     DialogTrigger
 } from "@/components/ui/dialog";
 import {getFeed, login, postMessage, register, setLike, unsetLike} from './api/requests.ts';
+import {ThemeProvider} from "@/components/theme-provider.tsx";
+import {ModeToggle} from "@/components/mode-toggle.tsx";
 
 interface Message {
     id: string;
@@ -160,51 +162,55 @@ export default function Component() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <header className="bg-white shadow-sm">
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <div className="min-h-screen">
+            <header className="shadow-sm bg-zinc-100 dark:bg-zinc-900">
                 <div className="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
-                    <h1 className="text-xl font-semibold text-gray-800">Blue Cactus</h1>
-                    {isLoggedIn ? (
-                        <div className="flex items-center space-x-4">
-                            <span className="text-sm text-gray-600">{username}</span>
-                            <Button variant="outline" size="sm" onClick={handleLogout}>Log Out</Button>
-                        </div>
-                    ) : (
-                        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                            <DialogTrigger asChild>
-                                <Button size="sm">Log In</Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-[425px]">
-                                <DialogHeader>
-                                    <DialogTitle>Log In or Register</DialogTitle>
-                                </DialogHeader>
-                                <div className="grid gap-2 py-4">
-                                    <DialogDescription>You need to Log In to write and like messages</DialogDescription>
-                                    <DialogDescription>Username must be 3-30 characters long, containing only letters,
-                                        numbers, and underscores.</DialogDescription>
-                                    {errorMessage &&
-                                        <DialogDescription className="text-red-500">{errorMessage}</DialogDescription>
-                                    }
-                                    {successMessage &&
-                                        <DialogDescription
-                                            className="text-blue-600">{successMessage}</DialogDescription>
-                                    }
-                                </div>
-                                <div className="grid gap-4 py-4">
-                                    <Input
-                                        placeholder="Username"
-                                        value={username}
-                                        onChange={(e) => setUsername(e.target.value)}
-                                    />
-                                    <div className="flex justify-end space-x-2">
-                                        <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
-                                        <Button variant="default" onClick={handleLogin}>Log In</Button>
-                                        <Button variant="secondary" onClick={handleRegister}>Register</Button>
+                    <h1 className="text-2xl font-semibold">Blue Cactus</h1>
+                    <div className="flex items-center space-x-4">
+                        {isLoggedIn ? (
+                            <div className="flex items-center space-x-4">
+                                <span className="text-lg">{username}</span>
+                                <Button variant="outline" size="default" onClick={handleLogout}>Log Out</Button>
+                            </div>
+                        ) : (
+                            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                                <DialogTrigger asChild>
+                                    <Button size="default">Log In</Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[425px]">
+                                    <DialogHeader>
+                                        <DialogTitle>Log In or Register</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="grid gap-2 py-4">
+                                        <DialogDescription>You need to Log In to write and like messages</DialogDescription>
+                                        <DialogDescription>Username must be 3-30 characters long, containing only letters,
+                                            numbers, and underscores.</DialogDescription>
+                                        {errorMessage &&
+                                            <DialogDescription className="text-red-500">{errorMessage}</DialogDescription>
+                                        }
+                                        {successMessage &&
+                                            <DialogDescription
+                                                className="text-blue-600">{successMessage}</DialogDescription>
+                                        }
                                     </div>
-                                </div>
-                            </DialogContent>
-                        </Dialog>
-                    )}
+                                    <div className="grid gap-4 py-4">
+                                        <Input
+                                            placeholder="Username"
+                                            value={username}
+                                            onChange={(e) => setUsername(e.target.value)}
+                                        />
+                                        <div className="flex justify-end space-x-2">
+                                            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
+                                            <Button variant="default" onClick={handleLogin}>Log In</Button>
+                                            <Button variant="secondary" onClick={handleRegister}>Register</Button>
+                                        </div>
+                                    </div>
+                                </DialogContent>
+                            </Dialog>
+                        )}
+                        <ModeToggle />
+                    </div>
                 </div>
             </header>
 
@@ -226,9 +232,9 @@ export default function Component() {
                     {messages.map((message) => (
                         <Card key={message.id} className="p-4 rounded-xl break-words">
                             <div className="space-y-2">
-                                <p className="font-semibold text-gray-800">{message.author_username}</p>
-                                <p className="text-gray-600">{message.content}</p>
-                                <div className="flex items-center text-gray-500">
+                                <p className="font-semibold">{message.author_username}</p>
+                                <p className="">{message.content}</p>
+                                <div className="flex items-center">
                                     <Button
                                         variant="ghost"
                                         size="sm"
@@ -245,5 +251,6 @@ export default function Component() {
                 </div>
             </main>
         </div>
+        </ThemeProvider>
     );
 }
