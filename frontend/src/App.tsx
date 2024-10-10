@@ -177,6 +177,8 @@ export default function Component() {
                             <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
                                     <DialogTitle>Log In or Register</DialogTitle>
+                                </DialogHeader>
+                                <div className="grid gap-2 py-4">
                                     <DialogDescription>You need to Log In to write and like messages</DialogDescription>
                                     <DialogDescription>Username must be 3-30 characters long, containing only letters,
                                         numbers, and underscores.</DialogDescription>
@@ -187,7 +189,7 @@ export default function Component() {
                                         <DialogDescription
                                             className="text-blue-600">{successMessage}</DialogDescription>
                                     }
-                                </DialogHeader>
+                                </div>
                                 <div className="grid gap-4 py-4">
                                     <Input
                                         placeholder="Username"
