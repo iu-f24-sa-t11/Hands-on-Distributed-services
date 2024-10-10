@@ -1,7 +1,8 @@
 import axios from 'axios';
+import {domain} from "@/config.ts";
 
 const axiosInstance = axios.create({
-    baseURL: 'https://localhost/api',
+    baseURL: 'https://' + domain + '/api',
 });
 
 export const register = (username: string) => {
