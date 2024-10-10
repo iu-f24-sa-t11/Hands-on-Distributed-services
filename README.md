@@ -12,6 +12,8 @@
 
 #### Screenshot:
 
+[-](https://github.com/iu-f24-sa-t11/Hands-on-Distributed-services/static/screenshot)
+
 ## Codebase organisation:
 
 ## Setup Instructions
