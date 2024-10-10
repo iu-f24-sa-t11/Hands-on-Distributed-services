@@ -131,7 +131,7 @@ git clone https://github.com/iu-f24-sa-t11/Hands-on-Distributed-services.git
 DOMAIN=<your domain>
 ```
 
-##### 3.1 Make sure you have insall requirements
+##### 3.1 Make sure you have install requirements
 ```
 chmod +x requirements.sh
 sudo ./requirements.sh
