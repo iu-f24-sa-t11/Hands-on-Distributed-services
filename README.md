@@ -28,7 +28,7 @@ DOMAIN=<your domain>
 
 ##### 3.1 Make sure you have insall requirements
 ```
-pip install -r requirements.txt
+sudo apt install requirements.txt
 ```
 
 ##### 3.2 Start application
