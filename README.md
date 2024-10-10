@@ -143,3 +143,4 @@ docker-compose up --build
 ```
 
 ## Link to YouTube video:
+[Here](https://youtu.be/ASdOmo3_4LU)
