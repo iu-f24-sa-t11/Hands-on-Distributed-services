@@ -10,6 +10,8 @@
 
 ## Application:
 
+**Blue Cactus** is a Twitter-like system where users can post short messages (<400 characters), read them, and like them. Users must be registered to post messages, with registered users having a username and nothing else (not even a password). Messages can be read by anyone as a feed, displaying the last 10 messages. The application is built using a service-based pattern from [FOSA], with services separated based on business context.
+
 #### Screenshot:
 
 [-](https://github.com/iu-f24-sa-t11/Hands-on-Distributed-services/static/screenshot)
