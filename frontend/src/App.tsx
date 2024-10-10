@@ -44,7 +44,7 @@ export default function Component() {
       }).catch(error => {
         console.error("Error fetching feed:", error);
       });
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogin = () => {
     if (username.trim()) {
